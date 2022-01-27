@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>test</title>
+
+  
+  <style>
+  body { padding-top:50px; }
+  </style>
+</head>
+<body class="container">
+  
+  <div class="container">
+
+      <div class="controlPanel" style="width: 30px; margin: 50px auto; display: flex; flex-direction: row; justify-content: space-around;">
+      <button id="addRow" onclick="addRow()" style="margin-right: 5px; width: 150px; height: 40px;">Add row</button>
+      <button id="deleteAll" onclick="deleteAll()" style="margin-right:5px; width: 150px; height: 40px">Delete row</button>
+    </div>
+      <header class="header" style="display: flex; font-family: monospace; justify-content: space-around;margin: 5%; min-width: 600px;">
+          <div class="titleColum">Name</div>
+          <div class="titleColum">E-mail</div>
+          <div class="titleColum">Data</div>
+      </header>
+      
+      <div id="dataList" class="content">
+
+      </div>
+  </div>
+  
+  <script type="text/javascript">
+      const littleDataBase=[]
+      
+      const Save = function(thi){
+        let saved =littleDataBase.find((el) => el.id == thi)
+        saved.name = document.getElementById(`${thi}name`).value;
+        saved.email = document.getElementById(`${thi}e-mail`).value;
+        saved.date = Date(thi)
+
+          console.log(saved);
+      }
+      const Delete = function(delId){
+        let delIndex = littleDataBase.indexOf(littleDataBase.find((el) => el.id ==delId))        
+        littleDataBase.splice(delIndex,1)
+        console.log(littleDataBase);
+        document.getElementById(`${delId}inputArea`).innerHtml=''
+      }
+      const idGenerator = (obj) =>  obj.id = Date.now()
+    const addRow = function(){
+        let rowDate ={
+          id:'',
+          name:'',
+          email:'',
+          date:'',
+
+      }
+        idGenerator(rowDate)
+        littleDataBase.push(rowDate)
+
+        console.log(littleDataBase);
+    let listDiv =document.getElementById('dataList');
+    let element  =`<div class="inputArea" id="${rowDate.id}inputArea" style="display: flex; font-family: monospace; justify-content: space-around;margin: 5%; min-width: 500px;" >
+    <input type="text" id="${rowDate.id}name">
+    <input type="email" id="${rowDate.id}e-mail">
+    <input type="date" id="date">
+    <button type="button" onclick="Save(${rowDate.id})">Save</button>
+    <button type="button" onclick="Delete(${rowDate.id})">Delete</button>
+</div>`
+    listDiv.insertAdjacentHTML('beforeend',element)
+}
+  </script>
+</body>
+</html>
